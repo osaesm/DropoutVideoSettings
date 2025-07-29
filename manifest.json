@@ -12,11 +12,12 @@
   ],
   "content_scripts": [
     {
+      "all_frames": true,
       "js": [
         "scripts/preferences.js"
       ],
       "matches": [
-        "https://www.dropout.tv/*"
+        "https://embed.vhx.tv/videos/*"
       ]
     }
   ]

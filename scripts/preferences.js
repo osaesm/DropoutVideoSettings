@@ -1,29 +1,35 @@
-async function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
-        }
-
-        const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                observer.disconnect();
-                resolve(document.querySelector(selector));
-            }
-        });
-
-        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-(async () => {
-    const volume_bar = await waitForElm(".volume");
-    console.log(volume_bar);
-    console.log("reaches here");
-})();
-// chrome.storage.local.set(({key: val}, () => {
-//     console.log('stored name: ' +  val )
-// }))
+async function CheckVolume() {
+    console.log("Starting...");
+    await sleep(5000);
+
+    // Checking the current volume
+    const volume = document.querySelector('div.volume').getAttribute('aria-valuenow');
+
+    // Accessing the captions
+    const captionModule = document.querySelector('div[aria-label="CC/Subtitles"]');
+    const captionSelection = captionModule.querySelector('div[aria-checked="true"]');
+    let captionLanguage = "Off";
+    if (captionSelection.getAttribute('data-id') !== 'off') {
+        captionLanguage = captionSelection.textContent.trim();
+        // TODO: Figure out caption settings if captions are turned on
+        // Problem: I can't access the caption options without messing up captionModule
+        // captionModule
+        // 'aria-label'
+        // 'aria-labelledby'
+    }
+    
+    // Checking resolution
+    const settingsModule = document.querySelector('div[aria-label="Settings"]');
+    const resolution = settingsModule.querySelector('div[aria-checked="true"]');
+
+    console.log(`Volume: ${volume}`);
+    // console.log(captionModule);
+    console.log(`Caption Language: ${captionLanguage}`);
+    console.log(`Resolution: ${resolution}`);
+}
+
+CheckVolume();
