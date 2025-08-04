@@ -12,6 +12,15 @@
   ],
   "content_scripts": [
     {
+      "all_frames": false,
+      "js": [
+        "scripts/isDropout.js"
+      ],
+      "matches": [
+        "https://www.dropout.tv/videos/*"
+      ]
+    },
+    {
       "all_frames": true,
       "js": [
         "scripts/preferences.js"
