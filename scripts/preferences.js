@@ -40,8 +40,25 @@ async function CheckVolume() {
             // First setting page is font settings
             await simulateClick(fontPage);
             const familyDiv = captionModule.querySelector('div[aria-label="Family"]');
-            const fontChoice = familyDiv.querySelector('div[aria-checked="true"]').textContent;
-            console.log(fontChoice);
+            const fontChoice = familyDiv.querySelector('div[aria-checked="true"]').textContent.trim();
+
+            const colorChoices = captionModule.querySelector('ul[aria-labelledby="vp-cc-font-color-label"]');
+            const fontColor = colorChoices.querySelector('li[aria-checked="true"]').getAttribute('aria-label');
+
+            const sizeChoices = captionModule.querySelector('ul[aria-labelledby="vp-cc-font-size-label"]');
+            const fontSize = sizeChoices.querySelector('li[aria-checked="true"]').textContent;
+
+            const opacities = captionModule.querySelector('ul[aria-labelledby="vp-cc-font-opacity-label"]');
+            const fontOpacity = opacities.querySelector('li[aria-checked="true"]').textContent;
+
+            const edgeDiv = captionModule.querySelector('div[aria-label="Edge style"]');
+            const edgeChoice = edgeDiv.querySelector('div[aria-checked="true"]').textContent.trim();
+
+            console.log(`Font Family: ${fontChoice}`);
+            console.log(`Font Color: ${fontColor}`);
+            console.log(`Font Size: ${fontSize}`);
+            console.log(`Font Opacity: ${fontOpacity}`);
+            console.log(`Font Edge: ${edgeChoice}`);
             console.log(captionModule);
             // await simulateClick(backgroundPage);
             // console.log(captionModule);
